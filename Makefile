@@ -11,13 +11,16 @@
 # **************************************************************************** #
 
 NAME = philo
-CC = CC
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
+
+SRCS = main.c \
+		init.c
 
 all : $(NAME)
 
 $(NAME) :
-
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 clean :
 	rm -rf $(OBJS) $(OBJS_B)
 

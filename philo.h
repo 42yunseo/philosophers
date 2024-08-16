@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philosophers.h                                     :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yunseo <yunseo@student.42gyeongsan.kr      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 22:57:03 by yunseo            #+#    #+#             */
-/*   Updated: 2024/08/16 23:07:55 by yunseo           ###   ########.fr       */
+/*   Updated: 2024/08/16 23:23:41 by yunseo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <string.h>
 # include <stdio.h>
@@ -20,6 +20,21 @@
 # include <sys/time.h>
 # include <pthread.h>
 
+typedef struct s_vars
+{
+	int			number_of_philo;
+	suseconds_t	die;
+	suseconds_t	eat;
+	suseconds_t	sleep;
+	int			number_of_times_must_eat;
+}				t_vars;
 
+typedef struct s_philo
+{
+	int	number;
+}				t_philo;
+
+
+t_vars	*vars_init(int argc, char **argv);
 
 #endif

@@ -27,13 +27,25 @@ typedef struct s_vars
 	suseconds_t	eat;
 	suseconds_t	sleep;
 	int			number_of_times_must_eat;
-}				t_vars;
+}t_vars;
 
 typedef struct s_philo
 {
-	int	number;
-}				t_philo;
+	int				number;
+	pthread_mutex_t	fork;
+}t_philo;
 
+typedef struct s_list
+{
+	t_philo			*philo;
+	struct s_list	*next;
+}t_list;
+
+typedef struct s_table
+{
+	t_list	*front;
+	t_list	*rear;
+}t_table;
 
 t_vars	*vars_init(int argc, char **argv);
 

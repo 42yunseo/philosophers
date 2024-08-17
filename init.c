@@ -22,11 +22,11 @@ t_vars	*vars_init(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	memset(vars, -1, sizeof(t_vars));
 	i = 0;
-	vars->number_of_philo = atoi(argv[0]);
-	vars->die = atol(argv[1]);
-	vars->eat = atol(argv[2]);
-	vars->sleep = atol(argv[3]);
-	if (argc == 5)
-		vars->number_of_times_must_eat = atoi(argv[4]);
+	vars->number_of_philo = atoi(argv[1]);
+	vars->die = atol(argv[2]);
+	vars->eat = atol(argv[3]);
+	vars->sleep = atol(argv[4]);
+	if (argc == 6)
+		vars->number_of_times_must_eat = atoi(argv[5]);
 	return (vars);
 }

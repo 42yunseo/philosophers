@@ -25,16 +25,12 @@ void	print_cur_time(struct timeval *start)
 
 int	main(int argc, char **argv)
 {
-	t_vars			*vars;
-	struct timeval	*tv;
+	t_vars	*vars;
+	t_philo	**philo;
 
-	if (argc < 5 || argc > 6)
+	if (argc != 5 || argc != 6)
 		return (0);
-	tv = (struct timeval *)malloc(sizeof(struct timeval));
-	if (tv == NULL)
-		exit(EXIT_FAILURE);
-	gettimeofday(tv, NULL);
 	vars = vars_init(argc, argv);
-	usleep(100);
-	print_cur_time(tv);
+	philo = philo_init(vars->number_of_philo);
+
 }

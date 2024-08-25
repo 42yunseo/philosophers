@@ -15,7 +15,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = main.c \
-		init.c
+		init.c \
+		utils.c
 
 all : $(NAME)
 

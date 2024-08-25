@@ -32,21 +32,16 @@ typedef struct s_vars
 typedef struct s_philo
 {
 	int				number;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
 }t_philo;
 
-typedef struct s_list
-{
-	t_philo			*philo;
-	struct s_list	*next;
-}t_list;
-
-typedef struct s_table
-{
-	t_list	*front;
-	t_list	*rear;
-}t_table;
+// eat -> sleep -> think -> eat -> ...
 
 t_vars	*vars_init(int argc, char **argv);
+t_philo	**philo_init(int size);
+
+// utils.c
+long	ft_atol(const char *nptr);
 
 #endif

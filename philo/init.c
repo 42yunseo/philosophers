@@ -31,38 +31,17 @@ t_vars	*vars_init(int argc, char **argv)
 	return (vars);
 }
 
-t_philo	**philos_init(int size)
+pthread_t	**philo_init(t_vars *vars)
 {
-	t_philo	**philo;
-	int		i;
+	pthread_t	**philo;
+	int			i;
 
-	philo = (t_philo **)malloc(sizeof(t_philo *) * size);
+	philo = (pthread_t **)malloc(sizeof(pthread_t *) * vars->number_of_philo);
 	if (philo == NULL)
 		exit(EXIT_FAILURE);
-	memset(philo, 0, sizeof(t_philo *));
 	i = 0;
-	while (i < size)
-	{
-		philo[i] = (t_philo *)malloc(sizeof(t_philo));
-		if (philo[i] == NULL)
-			exit(EXIT_FAILURE);
-		memset(philo[i], 0, sizeof(t_philo));
-		i++;
-	}
+	gettimeofday(&vars->start_time, NULL);
+	while (i < vars->number_of_philo)
+		pthread_create(philo[i++], NULL, start_routine, vars);
 	return (philo);
-}
-
-pthread_mutex_t	**fork_init(int size)
-{
-	pthread_mutex_t	**fork;
-	int				i;
-
-	fork = (pthread_mutex_t **)malloc(sizeof(pthread_mutex_t *) * size);
-	if (fork == NULL)
-		exit(EXIT_FAILURE);
-	i = 0;
-	while (i < size)
-		if (pthread_mutex_init(fork[i++], NULL) != 0)
-			exit(EXIT_FAILURE);
-	return (fork);
 }

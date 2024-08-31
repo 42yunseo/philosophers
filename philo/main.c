@@ -12,25 +12,32 @@
 
 #include "philo.h"
 
-void	print_cur_time(struct timeval *start)
+void	print_cur_time(struct timeval start, const char *msg)
 {
-	struct timeval	*cur;
+	struct timeval	cur;
+	suseconds_t		diff_time;
 
-	cur = (struct timeval *)malloc(sizeof(struct timeval));
-	if (cur == NULL)
-		exit(EXIT_FAILURE);
-	gettimeofday(cur, NULL);
-	printf("timestamp : %ld\n", (cur->tv_sec - start->tv_sec) * 1000000 + (cur->tv_usec - start->tv_usec));
+	gettimeofday(&cur, NULL);
+	diff_time = (cur.tv_sec - start.tv_sec) + (cur.tv_usec - start.tv_usec);
+	printf("%ld %s", diff_time, msg);
+}
+
+void	*start_routine(void *arg)
+{
+	struct timeval	tv;
+
+	tv = ((t_vars *)arg)->start_time;
+	print_cur_time(tv, "eating");
+	return (NULL);
 }
 
 int	main(int argc, char **argv)
 {
-	t_vars	*vars;
-	t_philo	**philo;
+	t_vars		*vars;
+	pthread_t	**philo;
 
-	if (argc != 5 || argc != 6)
+	if (argc != 5 && argc != 6)
 		return (0);
 	vars = vars_init(argc, argv);
-	philo = philo_init(vars->number_of_philo);
-
+	philo = philo_init(vars);
 }

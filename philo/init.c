@@ -42,6 +42,12 @@ pthread_t	**philo_init(t_vars *vars)
 	i = 0;
 	gettimeofday(&vars->start_time, NULL);
 	while (i < vars->number_of_philo)
+	{
+		philo[i] = (pthread_t *)malloc(sizeof(pthread_t));
+		if (philo[i] == NULL)
+			exit(EXIT_FAILURE);
 		pthread_create(philo[i++], NULL, start_routine, vars);
+		sleep(5);
+	}
 	return (philo);
 }

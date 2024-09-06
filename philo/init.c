@@ -33,21 +33,19 @@ t_vars	*vars_init(int argc, char **argv)
 
 pthread_t	**philo_init(t_vars *vars)
 {
-	pthread_t	**philo;
+	pthread_t	**philos;
 	int			i;
 
-	philo = (pthread_t **)malloc(sizeof(pthread_t *) * vars->number_of_philo);
-	if (philo == NULL)
+	philos = (pthread_t **)malloc(sizeof(pthread_t *) * vars->number_of_philo);
+	if (philos == NULL)
 		exit(EXIT_FAILURE);
 	i = 0;
-	gettimeofday(&vars->start_time, NULL);
 	while (i < vars->number_of_philo)
 	{
-		philo[i] = (pthread_t *)malloc(sizeof(pthread_t));
-		if (philo[i] == NULL)
+		philos[i] = (pthread_t *)malloc(sizeof(pthread_t));
+		if (philos[i] == NULL)
 			exit(EXIT_FAILURE);
-		pthread_create(philo[i++], NULL, start_routine, vars);
-		sleep(5);
+		i++;
 	}
-	return (philo);
+	return (philos);
 }

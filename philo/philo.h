@@ -27,15 +27,40 @@ typedef struct s_vars
 	suseconds_t		eat;
 	suseconds_t		sleep;
 	int				number_of_times_must_eat;
-	struct timeval	start_time;
+	suseconds_t		start_time;
+	pthread_mutex_t	*print_mutex;
+	pthread_mutex_t	*finish_mutex;
+	int				finish;
+	pthread_mutex_t	*eat_num_mutex;
+	int				eat_num;
 }t_vars;
+
+typedef struct s_philo
+{
+	t_vars			*vars;
+	int				id;
+	pthread_mutex_t	*eat_cnt_mutex;
+	int				eat_cnt;
+	pthread_mutex_t	*l_fork_mutex;
+	int				*l_fork;
+	pthread_mutex_t	*r_fork_mutex;
+	int				*r_fork;
+	pthread_mutex_t	*last_eat_mutex;
+	suseconds_t		last_eat;
+}t_philo;
 
 // eat -> sleep -> think -> eat -> ...
 
 t_vars		*vars_init(int argc, char **argv);
 pthread_t	**philo_init(t_vars *vars);
 
+suseconds_t	getms(void);
+
+// thread.c
 void		*start_routine(void *arg);
+void		ph_eat(t_philo *philo);
+void		ph_sleep(t_philo *philo);
+void		ph_think(t_philo *philo);
 
 // utils.c
 long		ft_atol(const char *nptr);

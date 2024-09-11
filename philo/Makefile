@@ -18,7 +18,8 @@ LFLAGS = -lpthread
 SRCS = main.c \
 		init.c \
 		utils.c \
-		thread.c
+		thread.c \
+		philo.c
 
 all : $(NAME)
 

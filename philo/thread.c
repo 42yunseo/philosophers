@@ -40,15 +40,15 @@ void	ph_eat(t_philo *philo)
 
 void	ph_sleep(t_philo *philo)
 {
-	pthread_mutex_lock(philo->vars->print_mutex);
+	pthread_mutex_lock(&philo->vars->print_mutex);
 	printf("%ld %d is thinking\n", getms(), philo->id);
-	pthread_mutex_unlock(philo->vars->print_mutex);
-	usleep(philo->vars->sleep * 1000);
+	pthread_mutex_unlock(&philo->vars->print_mutex);
+	usleep(philo->vars->input->sleep * 1000);
 }
 
 void	ph_think(t_philo *philo)
 {
-	pthread_mutex_lock(philo->vars->print_mutex);
+	pthread_mutex_lock(&philo->vars->print_mutex);
 	printf("%ld %d is thinking\n", getms(), philo->id);
-	pthread_mutex_unlock(philo->vars->print_mutex);
+	pthread_mutex_unlock(&philo->vars->print_mutex);
 }

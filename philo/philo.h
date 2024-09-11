@@ -23,6 +23,8 @@
 # define NOT_IN_USE	0
 # define IN_USE		1
 
+# define FINISH		1
+
 typedef struct s_input
 {
 	int				number_of_philo;
@@ -62,6 +64,7 @@ typedef struct s_philo
 //	init.c
 t_vars		*vars_init(int argc, char **argv);
 t_philo		**philos_init(t_vars *vars, int size);
+pthread_t	*thread_init(int size);
 
 //	philo.c
 void		set_philo(t_philo **philos, int size);

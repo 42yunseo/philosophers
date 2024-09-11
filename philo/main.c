@@ -12,9 +12,24 @@
 
 #include "philo.h"
 
-void	run(void)
+void	run(t_vars *vars, t_philo **philos, pthread_t *threads, int size)
 {
-	printf("RUN\n");
+	int	i;
+
+	i = 0;
+	vars->start_time = getms();
+	while (i < size)
+	{
+		pthread_create(&threads[i], NULL, start_routine, philos[i]);
+		i++;
+	}
+	i = 0;
+	sleep(10);
+	pthread_mutex_lock(&vars->finish_mutex);
+	vars->finish = FINISH;
+	pthread_mutex_unlock(&vars->finish_mutex);
+	while (i < size)
+		pthread_join(threads[i++], NULL);
 }
 
 void	print_philo(t_philo *philo)
@@ -61,6 +76,7 @@ int	main(int argc, char **argv)
 {
 	t_vars		*vars;
 	t_philo		**philos;
+	pthread_t	*ph_threads;
 	int			size;
 
 	if (argc != 5 && argc != 6)
@@ -69,7 +85,7 @@ int	main(int argc, char **argv)
 	size = vars->input->number_of_philo;
 	philos = philos_init(vars, size);
 	set_philo(philos, size);
-	print_status(vars, philos, size);
-	//run();
+	ph_threads = thread_init(size);
+	run(vars, philos, ph_threads, size);
 	return (0);
 }

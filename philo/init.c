@@ -80,3 +80,13 @@ t_philo	**philos_init(t_vars *vars, int size)
 	}
 	return (philo);
 }
+
+pthread_t	*thread_init(int size)
+{
+	pthread_t	*thread;
+
+	thread = (pthread_t *)malloc(sizeof(pthread_t) * size);
+	if (thread == NULL)
+		exit(EXIT_FAILURE);
+	return (thread);
+}

@@ -53,12 +53,20 @@ void	ph_eat(t_philo *philo)
 void	ph_sleep(t_philo *philo)
 {
 	suseconds_t	start_time;
+	suseconds_t	cur_time;
+	suseconds_t	target_time;
 
 	start_time = philo->vars->start_time;
+	cur_time = getms();
+	target_time = cur_time + philo->vars->input->sleep;
 	pthread_mutex_lock(&philo->vars->print_mutex);
-	printf("%ld %d is sleeping\n", getms() - start_time, philo->id);
+	printf("%ld - %ld = %ld\n", cur_time, start_time, cur_time - start_time);
+	printf("%ld %d is sleeping\n", cur_time - start_time, philo->id);
 	pthread_mutex_unlock(&philo->vars->print_mutex);
-	usleep(philo->vars->input->sleep * 1000);
+	usleep(philo->vars->input->sleep / 2);
+	while (getms() < target_time)
+		usleep(100);
+	//usleep(philo->vars->input->sleep * 1000);
 }
 
 void	ph_think(t_philo *philo)

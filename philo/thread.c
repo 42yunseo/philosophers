@@ -35,46 +35,61 @@ void	*start_routine(void *arg)
 	return (NULL);
 }
 
+void	ph_take_fork(t_philo *philo, int dir)
+{
+	pthread_mutex_t	*fork_mutex;
+
+	if (dir == L_FORK)
+		fork_mutex = philo->l_fork_mutex;
+	if (dir == R_FORK)
+		fork_mutex = philo->r_fork_mutex;
+	pthread_mutex_lock(fork_mutex);
+	ph_print(philo->vars, philo->id, FORK_MSG);
+}
+
 void	ph_eat(t_philo *philo)
 {
-	//suseconds_t	start_time;
+	suseconds_t	cur_time;
 
-	//start_time = philo->vars->start_time;
 	if (philo->id % 2 == 0)
 	{
-
+		ph_take_fork(philo, L_FORK);
+		ph_take_fork(philo, R_FORK);
 	}
 	else
 	{
-
+		ph_take_fork(philo, R_FORK);
+		ph_take_fork(philo, L_FORK);
 	}
+	cur_time = getms();
+	pthread_mutex_lock(philo->eat_cnt_mutex);
+	philo->eat_cnt++;
+	if (philo->eat_cnt == philo->vars->input->number_of_times_must_eat)
+	{
+		pthread_mutex_lock(&philo->vars->eat_num_mutex);
+		philo->vars->eat_num++;
+		pthread_mutx_unlock(&philo->vars->eat_num_mutex);
+	}
+	pthread_mutex_unlock(philo->eat_cnt_mutex);
+	pthread_mutex_lock(philo->last_eat_mutex);
+	philo->last_eat = cur_time;
+	pthread_mutex_unlock(philo->last_eat_mutex);
+	ph_print(philo->vars, philo->id, EAT_MSG);
+	ft_sleep(cur_time, philo->vars->input->eat);
+	pthread_mutex_unlock(philo->l_fork_mutex);
+	pthread_mutex_unlock(philo->r_fork_mutex);
 }
 
 void	ph_sleep(t_philo *philo)
 {
-	suseconds_t	start_time;
 	suseconds_t	cur_time;
-	suseconds_t	target_time;
 
-	start_time = philo->vars->start_time;
 	cur_time = getms();
-	target_time = cur_time + philo->vars->input->sleep;
-	pthread_mutex_lock(&philo->vars->print_mutex);
-	printf("%ld - %ld = %ld\n", cur_time, start_time, cur_time - start_time);
-	printf("%ld %d is sleeping\n", cur_time - start_time, philo->id);
-	pthread_mutex_unlock(&philo->vars->print_mutex);
-	usleep(philo->vars->input->sleep / 2);
-	while (getms() < target_time)
-		usleep(100);
-	//usleep(philo->vars->input->sleep * 1000);
+	ph_print(philo->vars, philo->id, SLEEP_MSG);
+	ft_sleep(cur_time, philo->vars->input->sleep);
 }
 
 void	ph_think(t_philo *philo)
 {
-	suseconds_t	start_time;
-
-	start_time = philo->vars->start_time;
-	pthread_mutex_lock(&philo->vars->print_mutex);
-	printf("%ld %d is thinking\n", getms() - start_time, philo->id);
-	pthread_mutex_unlock(&philo->vars->print_mutex);
+	ph_print(philo->vars, philo->id, THINK_MSG);
 }

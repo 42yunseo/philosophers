@@ -19,6 +19,7 @@ SRCS = main.c \
 		init.c \
 		utils.c \
 		thread.c \
+		thread_utils.c \
 		philo.c
 
 all : $(NAME)

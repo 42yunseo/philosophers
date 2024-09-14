@@ -12,6 +12,19 @@
 
 #include "philo.h"
 
+void	detect_starvation()
+{
+
+}
+
+void	monitoring(t_vars *vars)
+{
+	while (1)
+	{
+		usleep(1000);
+	}
+}
+
 void	run(t_vars *vars, t_philo **philos, pthread_t *threads, int size)
 {
 	int	i;
@@ -72,6 +85,40 @@ void	print_status(t_vars *vars, t_philo **philos, int size)
 		print_philo(philos[i++]);
 }
 
+int	check_integer(char *str)
+{
+	if (str == NULL)
+		return (1);
+	if (ft_atol(str) <= 0 || ft_atol(str) > __INT_MAX__)
+		return (1);
+	while (ft_isdigit(*str))
+		str++;
+	if (*str != '\0')
+		return (1);
+	return (0);
+}
+
+int	check_input(int argc, char **argv)
+{
+	int	i;
+
+	if (argc != 5 && argc != 6)
+	{
+		printf("Error : Invalid number of arguments.\n");
+		return (1);
+	}
+	i = 0;
+	while (++i < argc)
+	{
+		if (check_integer(argv[i]))
+		{
+			printf("Error : Invalid input.\n");
+			return (1);
+		}
+	}
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_vars		*vars;
@@ -79,9 +126,11 @@ int	main(int argc, char **argv)
 	pthread_t	*ph_threads;
 	int			size;
 
-	if (argc != 5 && argc != 6)
+	if (check_input(argc, argv) != 0)
 		return (0);
 	vars = vars_init(argc, argv);
+	if (vars == NULL)
+		return (1);
 	size = vars->input->number_of_philo;
 	philos = philos_init(vars, size);
 	set_philo(philos, size);

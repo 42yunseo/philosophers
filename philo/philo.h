@@ -25,13 +25,22 @@
 
 # define FINISH		1
 
+# define L_FORK		0
+# define R_FORK		1
+
+# define FORK_MSG	"has taken a fork"
+# define EAT_MSG	"is eating"
+# define SLEEP_MSG	"is sleeping"
+# define THINK_MSG	"is thinking"
+# define DIED_MSG	"is died"
+
 typedef struct s_input
 {
-	int				number_of_philo;
-	suseconds_t		die;
-	suseconds_t		eat;
-	suseconds_t		sleep;
-	int				number_of_times_must_eat;
+	int	number_of_philo;
+	int	die;
+	int	eat;
+	int	sleep;
+	int	number_of_times_must_eat;
 }t_input;
 
 typedef struct s_vars
@@ -71,13 +80,20 @@ void		set_philo(t_philo **philos, int size);
 
 // thread.c
 void		*start_routine(void *arg);
+void		ph_take_fork(t_philo *philo, int dir);
 void		ph_eat(t_philo *philo);
 void		ph_sleep(t_philo *philo);
 void		ph_think(t_philo *philo);
 
+// thread_utils.c
+void		ph_print(t_vars *vars, int id, const char *msg);
+
 // utils.c
+int			ft_isdigit(int c);
 long		ft_atol(const char *nptr);
 suseconds_t	getms(void);
+suseconds_t	get_cur_ms(t_vars *vars);
+void		ft_sleep(suseconds_t cur_time, suseconds_t msec);
 
 #endif
 

@@ -31,7 +31,7 @@ long	ft_atol(const char *nptr)
 		negative = 1;
 		nptr++;
 	}
-	while (*nptr && ft_isdigit(*nptr))
+	while (ft_isdigit(*nptr))
 		value = value * 10 + *nptr++ - '0';
 	if (negative == 1)
 		value = -value;
@@ -43,5 +43,10 @@ suseconds_t	getms(void)
 	struct timeval	tv;
 
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	return (tv.tv_sec * 1000L + tv.tv_usec / 1000);
+}
+
+suseconds_t	get_cur_ms(t_vars *vars)
+{
+	return (getms() - vars->start_time);
 }

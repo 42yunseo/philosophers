@@ -12,24 +12,27 @@
 
 #include "philo.h"
 
-void	detect_starvation()
-{
-
-}
-
-void	monitoring(t_vars *vars)
+void	monitoring(t_vars *vars, t_philo **philos)
 {
 	while (1)
 	{
+		if (finish_detect(vars) == FINISH)
+		{
+			printf("finish!\n");
+			return ;
+		}
+		detect_starvation(vars, philos);
 		usleep(1000);
 	}
 }
 
-void	run(t_vars *vars, t_philo **philos, pthread_t *threads, int size)
+void	run(t_vars *vars, t_philo **philos, pthread_t *threads)
 {
 	int	i;
+	int	size;
 
 	i = 0;
+	size = vars->input->number_of_philo;
 	vars->start_time = getms();
 	while (i < size)
 	{
@@ -37,12 +40,12 @@ void	run(t_vars *vars, t_philo **philos, pthread_t *threads, int size)
 		i++;
 	}
 	i = 0;
-	sleep(10);
-	pthread_mutex_lock(&vars->finish_mutex);
-	vars->finish = FINISH;
-	pthread_mutex_unlock(&vars->finish_mutex);
+	monitoring(vars, philos);
 	while (i < size)
+	{
+		printf("join %d thread\n", i);
 		pthread_join(threads[i++], NULL);
+	}
 }
 
 void	print_philo(t_philo *philo)
@@ -132,9 +135,9 @@ int	main(int argc, char **argv)
 	if (vars == NULL)
 		return (1);
 	size = vars->input->number_of_philo;
-	philos = philos_init(vars, size);
+	philos = philos_init(vars);
 	set_philo(philos, size);
 	ph_threads = thread_init(size);
-	run(vars, philos, ph_threads, size);
+	run(vars, philos, ph_threads);
 	return (0);
 }

@@ -32,3 +32,11 @@ void	ft_sleep(suseconds_t cur_time, suseconds_t msec)
 	while (getms() < target_time)
 		usleep(100);
 }
+
+void	ph_put_down_forks(t_philo *philo)
+{
+	if (philo->l_fork != NULL)
+		pthread_mutex_unlock(philo->l_fork_mutex);
+	if (philo->r_fork != NULL)
+		pthread_mutex_unlock(philo->r_fork_mutex);
+}

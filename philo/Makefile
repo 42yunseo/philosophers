@@ -20,15 +20,18 @@ SRCS = main.c \
 		utils.c \
 		thread.c \
 		thread_utils.c \
-		philo.c
+		philo.c \
+		detect.c
+
+OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
-$(NAME) :
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME) $(LFLAGS)
+$(NAME) : $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
 
 clean :
-	rm -rf $(OBJS) $(OBJS_B)
+	rm -rf $(OBJS)
 
 fclean : clean
 	rm -rf $(NAME)

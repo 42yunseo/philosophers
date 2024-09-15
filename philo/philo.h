@@ -72,7 +72,7 @@ typedef struct s_philo
 
 //	init.c
 t_vars		*vars_init(int argc, char **argv);
-t_philo		**philos_init(t_vars *vars, int size);
+t_philo		**philos_init(t_vars *vars);
 pthread_t	*thread_init(int size);
 
 //	philo.c
@@ -87,6 +87,12 @@ void		ph_think(t_philo *philo);
 
 // thread_utils.c
 void		ph_print(t_vars *vars, int id, const char *msg);
+void		ft_sleep(suseconds_t cur_time, suseconds_t msec);
+void		ph_put_down_forks(t_philo *philo);
+
+// detect.c
+int			finish_detect(t_vars *vars);
+void		detect_starvation(t_vars *vars, t_philo **philos);
 
 // utils.c
 int			ft_isdigit(int c);

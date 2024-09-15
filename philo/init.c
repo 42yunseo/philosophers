@@ -66,11 +66,13 @@ t_philo	*philo_init(t_vars *vars, int id)
 	return (philo);
 }
 
-t_philo	**philos_init(t_vars *vars, int size)
+t_philo	**philos_init(t_vars *vars)
 {
 	t_philo	**philo;
 	int		i;
+	int		size;
 
+	size = vars->input->number_of_philo;
 	philo = (t_philo **)malloc(sizeof(t_philo *) * size);
 	if (philo == NULL)
 		return (NULL);

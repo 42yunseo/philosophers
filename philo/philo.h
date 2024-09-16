@@ -101,6 +101,8 @@ suseconds_t	getms(void);
 suseconds_t	get_cur_ms(t_vars *vars);
 void		ft_sleep(suseconds_t cur_time, suseconds_t msec);
 
+void	free_all(t_vars *vars, t_philo **philos, pthread_t *ph_thread);
+
 #endif
 
 /*

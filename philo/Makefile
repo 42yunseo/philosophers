@@ -13,7 +13,7 @@
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS = -lpthread
+LFLAGS = -lpthread -fsanitize=address
 
 SRCS = main.c \
 		init.c \
@@ -21,7 +21,8 @@ SRCS = main.c \
 		thread.c \
 		thread_utils.c \
 		philo.c \
-		detect.c
+		detect.c \
+		free.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -29,6 +30,10 @@ all : $(NAME)
 
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
+
+.c.o :
+	$(CC) -c -o $@ $<
+
 
 clean :
 	rm -rf $(OBJS)

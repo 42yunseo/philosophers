@@ -139,5 +139,6 @@ int	main(int argc, char **argv)
 	set_philo(philos, size);
 	ph_threads = thread_init(size);
 	run(vars, philos, ph_threads);
+	free_all(vars, philos, ph_threads);
 	return (0);
 }

@@ -41,7 +41,7 @@ typedef struct s_input
 	int	eat;
 	int	sleep;
 	int	number_of_times_must_eat;
-}t_input;
+}	t_input;
 
 typedef struct s_vars
 {
@@ -52,7 +52,7 @@ typedef struct s_vars
 	int				finish;
 	pthread_mutex_t	eat_num_mutex;
 	int				eat_num;
-}t_vars;
+}	t_vars;
 
 typedef struct s_philo
 {
@@ -66,7 +66,7 @@ typedef struct s_philo
 	int				eat_cnt;
 	pthread_mutex_t	*last_eat_mutex;
 	suseconds_t		last_eat;
-}t_philo;
+}	t_philo;
 
 // eat -> sleep -> think -> eat -> ...
 
@@ -87,46 +87,21 @@ void		ph_think(t_philo *philo);
 
 // thread_utils.c
 void		ph_print(t_vars *vars, int id, const char *msg);
-void		ft_sleep(suseconds_t cur_time, suseconds_t msec);
+void		ft_sleep(t_vars *vars, suseconds_t cur_time, suseconds_t msec);
 void		ph_put_down_forks(t_philo *philo);
+void		update_eat(t_philo *philo);
 
 // detect.c
-int			finish_detect(t_vars *vars);
+int			detect_finish(t_vars *vars);
 void		detect_starvation(t_vars *vars, t_philo **philos);
+void		detect_eat_cnt(t_vars *vars);
 
 // utils.c
 int			ft_isdigit(int c);
 long		ft_atol(const char *nptr);
 suseconds_t	getms(void);
 suseconds_t	get_cur_ms(t_vars *vars);
-void		ft_sleep(suseconds_t cur_time, suseconds_t msec);
 
-void	free_all(t_vars *vars, t_philo **philos, pthread_t *ph_thread);
+void		free_all(t_vars *vars, t_philo **philos, pthread_t *ph_thread);
 
 #endif
-
-/*
-
-timestamp_in_ms X has taken a fork
-timestamp_in_ms X is eating
-timestamp_in_ms X is sleeping
-timestamp_in_ms X is thinking
-timestamp_in_ms X died
-
-*/
-
-/*
-
-int	usleep(useconds_t usec)
-int	gettimeofday(struct timeval *tv, struct timezone *tz)
-
-int	pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine) (void *), void *arg)
-int	pthread_detach(pthread_t thread)
-int pthread_join(pthread_t thread, void **retval)
-
-int	pthread_mutex_init(pthread_mutex_t *restrict mutex, const pthread_mutexattr_t *restrict attr)
-int	pthread_mutex_destroy(pthread_mutex_t *mutex)
-int	pthread_mutex_lock(pthread_mutex_t *mutex)
-int	pthread_mutex_unlock(pthread_mutex_t *mutex)
-
-*/

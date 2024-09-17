@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-int	finish_detect(t_vars *vars)
+int	detect_finish(t_vars *vars)
 {
 	int	ret;
 
@@ -29,21 +29,33 @@ void	detect_starvation(t_vars *vars, t_philo **philos)
 	int	i;
 	int	size;
 
-	//printf("detect_starvation call\n");
 	i = 0;
 	size = vars->input->number_of_philo;
 	while (i < size)
 	{
+		if (detect_finish(vars) == FINISH)
+			break ;
 		pthread_mutex_lock(philos[i]->last_eat_mutex);
-		if (philos[i]->last_eat + vars->input->die < get_cur_ms(vars))
+		if (get_cur_ms(vars) - philos[i]->last_eat > vars->input->die)
 		{
 			ph_print(vars, i + 1, DIED_MSG);
 			pthread_mutex_lock(&vars->finish_mutex);
 			vars->finish = FINISH;
 			pthread_mutex_unlock(&vars->finish_mutex);
-			pthread_mutex_unlock(philos[i]->last_eat_mutex);
 		}
 		pthread_mutex_unlock(philos[i]->last_eat_mutex);
 		i++;
 	}
+}
+
+void	detect_eat_cnt(t_vars *vars)
+{
+	pthread_mutex_lock(&vars->eat_num_mutex);
+	if (vars->eat_num == vars->input->number_of_philo)
+	{
+		pthread_mutex_lock(&vars->finish_mutex);
+		vars->finish = FINISH;
+		pthread_mutex_unlock(&vars->finish_mutex);
+	}
+	pthread_mutex_unlock(&vars->eat_num_mutex);
 }

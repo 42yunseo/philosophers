@@ -14,7 +14,7 @@
 
 void	vars_free(t_vars *vars)
 {
-	free(vars->input);	
+	free(vars->input);
 	pthread_mutex_destroy(&vars->print_mutex);
 	pthread_mutex_destroy(&vars->finish_mutex);
 	pthread_mutex_destroy(&vars->eat_num_mutex);
@@ -25,8 +25,11 @@ void	philo_free(t_philo *philo)
 {
 	free(philo->l_fork);
 	pthread_mutex_destroy(philo->l_fork_mutex);
+	free(philo->l_fork_mutex);
 	pthread_mutex_destroy(philo->eat_cnt_mutex);
+	free(philo->eat_cnt_mutex);
 	pthread_mutex_destroy(philo->last_eat_mutex);
+	free(philo->last_eat_mutex);
 	free(philo);
 }
 
@@ -47,4 +50,5 @@ void	free_all(t_vars *vars, t_philo **philos, pthread_t *ph_thread)
 	size = vars->input->number_of_philo;
 	vars_free(vars);
 	philos_free(philos, size);
+	free(ph_thread);
 }

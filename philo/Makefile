@@ -13,7 +13,7 @@
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS = -lpthread -fsanitize=address
+LFLAGS = -lpthread
 
 SRCS = main.c \
 		init.c \
@@ -32,7 +32,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
 
 .c.o :
-	$(CC) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 
 clean :

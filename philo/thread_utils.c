@@ -25,7 +25,11 @@ void	ft_sleep(t_vars *vars, suseconds_t cur_time, suseconds_t msec)
 
 	target_time = cur_time + msec;
 	while (get_cur_ms(vars) < target_time)
+	{
+		if (detect_finish(vars) == FINISH)
+			return ;
 		usleep(100);
+	}
 }
 
 void	ph_put_down_forks(t_philo *philo)

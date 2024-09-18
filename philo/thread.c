@@ -54,7 +54,7 @@ void	ph_take_fork(t_philo *philo, int dir)
 	pthread_mutex_lock(fork_mutex);
 	if (detect_finish(philo->vars) == FINISH)
 		return ;
-	fork++;
+	(*fork)++;
 	ph_print(philo->vars, philo->id, FORK_MSG);
 }
 

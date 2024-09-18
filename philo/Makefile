@@ -32,7 +32,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
 
 .c.o :
-	$(CC) $(CFLAGS) -c -o $@ $<
+	$(CC)  -c -o $@ $<
 
 
 clean :

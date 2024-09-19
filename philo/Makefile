@@ -6,7 +6,7 @@
 #    By: yunseo <yunseo@student.42gyeongsan.kr      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/16 23:08:13 by yunseo            #+#    #+#              #
-#    Updated: 2024/08/31 17:41:24 by yunseo           ###   ########.fr        #
+#    Updated: 2024/09/19 19:45:22 by yunseo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,7 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LFLAGS)
 
 .c.o :
-	$(CC)  -c -o $@ $<
-
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean :
 	rm -rf $(OBJS)

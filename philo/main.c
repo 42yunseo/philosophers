@@ -92,8 +92,12 @@ int	main(int argc, char **argv)
 		return (1);
 	size = vars->input->number_of_philo;
 	philos = philos_init(vars);
+	if (philos == NULL)
+		return (1);
 	set_philo(philos, size);
 	ph_threads = thread_init(size);
+	if (ph_threads == NULL)
+		return (1);
 	run(vars, philos, ph_threads);
 	free_all(vars, philos, ph_threads);
 	return (0);

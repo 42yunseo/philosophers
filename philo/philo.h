@@ -92,7 +92,6 @@ void		ph_put_down_forks(t_philo *philo);
 suseconds_t	update_last_eat(t_philo *philo);
 void		update_eat_cnt(t_philo *philo);
 
-
 // detect.c
 int			detect_finish(t_vars *vars);
 void		detect_starvation(t_vars *vars, t_philo **philos);

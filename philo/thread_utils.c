@@ -35,9 +35,15 @@ void	ft_sleep(t_vars *vars, suseconds_t start_time, suseconds_t msec)
 void	ph_put_down_forks(t_philo *philo)
 {
 	if (philo->l_fork != NULL)
+	{
+		(*philo->l_fork)--;
 		pthread_mutex_unlock(philo->l_fork_mutex);
+	}
 	if (philo->r_fork != NULL)
+	{
+		(*philo->r_fork)--;
 		pthread_mutex_unlock(philo->r_fork_mutex);
+	}
 }
 
 suseconds_t	update_last_eat(t_philo *philo)

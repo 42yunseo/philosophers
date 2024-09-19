@@ -78,11 +78,9 @@ void	ph_eat(t_philo *philo)
 		return ;
 	}
 	ph_print(philo->vars, philo->id, EAT_MSG);
-	update_eat(philo);
-	pthread_mutex_lock(philo->last_eat_mutex);
-	cur_time = philo->last_eat;
-	pthread_mutex_unlock(philo->last_eat_mutex);
+	cur_time = update_last_eat(philo);
 	ft_sleep(philo->vars, cur_time, philo->vars->input->eat);
+	update_eat_cnt(philo);
 	ph_put_down_forks(philo);
 }
 

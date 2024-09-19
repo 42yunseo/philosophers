@@ -89,7 +89,9 @@ void		ph_think(t_philo *philo);
 void		ph_print(t_vars *vars, int id, const char *msg);
 void		ft_sleep(t_vars *vars, suseconds_t cur_time, suseconds_t msec);
 void		ph_put_down_forks(t_philo *philo);
-void		update_eat(t_philo *philo);
+suseconds_t	update_last_eat(t_philo *philo);
+void		update_eat_cnt(t_philo *philo);
+
 
 // detect.c
 int			detect_finish(t_vars *vars);

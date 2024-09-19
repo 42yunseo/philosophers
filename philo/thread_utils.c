@@ -19,11 +19,11 @@ void	ph_print(t_vars *vars, int id, const char *msg)
 	pthread_mutex_unlock(&vars->print_mutex);
 }
 
-void	ft_sleep(t_vars *vars, suseconds_t cur_time, suseconds_t msec)
+void	ft_sleep(t_vars *vars, suseconds_t start_time, suseconds_t msec)
 {
 	suseconds_t	target_time;
 
-	target_time = cur_time + msec;
+	target_time = start_time + msec;
 	while (get_cur_ms(vars) < target_time)
 	{
 		if (detect_finish(vars) == FINISH)
@@ -40,7 +40,18 @@ void	ph_put_down_forks(t_philo *philo)
 		pthread_mutex_unlock(philo->r_fork_mutex);
 }
 
-void	update_eat(t_philo *philo)
+suseconds_t	update_last_eat(t_philo *philo)
+{
+	suseconds_t	cur_time;
+
+	pthread_mutex_lock(philo->last_eat_mutex);
+	cur_time = get_cur_ms(philo->vars);
+	philo->last_eat = cur_time;
+	pthread_mutex_unlock(philo->last_eat_mutex);
+	return (cur_time);
+}
+
+void	update_eat_cnt(t_philo *philo)
 {
 	pthread_mutex_lock(philo->eat_cnt_mutex);
 	philo->eat_cnt++;
@@ -51,7 +62,4 @@ void	update_eat(t_philo *philo)
 		pthread_mutex_unlock(&philo->vars->eat_num_mutex);
 	}
 	pthread_mutex_unlock(philo->eat_cnt_mutex);
-	pthread_mutex_lock(philo->last_eat_mutex);
-	philo->last_eat = get_cur_ms(philo->vars);
-	pthread_mutex_unlock(philo->last_eat_mutex);
 }
